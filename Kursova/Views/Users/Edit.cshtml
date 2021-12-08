@@ -1,0 +1,64 @@
+﻿@model Kursova.ViewModels.EditUserViewModel
+
+<div class="container-fluid vh-100" style="margin-top:300px">
+
+    <div class="rounded d-flex justify-content-center">
+        <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
+            <div class="text-center">
+                <h3 class="text-primary">Edit Account</h3>
+            </div>
+            <div class="p-4">
+
+                <form method="post" asp-controller="Users" asp-action="Edit">
+                    <div>
+                        <input type="hidden" asp-for="Id" />
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary">
+                            <i class="bi bi-person-plus-fill text-white"></i>
+                        </span>
+                        <input asp-for="UserName" placeholder="Full Name" class="form-control">
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <span class="input-group-text bg-primary">
+                            <i class="bi bi-envelope text-white"></i>
+                        </span>
+                        <input asp-for="Email" placeholder="Email" class="form-control">
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <span class="input-group-text bg-primary">
+                            <i class="bi bi-key-fill text-white"></i>
+                        </span>
+                        <input asp-for="OldPassword" placeholder="Current Password" class="form-control">
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <span class="input-group-text bg-primary">
+                            <i class="bi bi-key-fill text-white"></i>
+                        </span>
+                        <input asp-for="NewPassword" placeholder="New password" class="form-control">
+                    </div>
+                    <small class="text-muted mt-1">Leave blank if you don't want to change password</small>
+                    <div class="d-grid mx-auto">
+                        <input type="submit" class="btn btn-primary" value="Edit">
+                    </div>
+
+                </form>
+                <p class="text-center mt-3">
+                    Delete an account
+                </p>
+                    <form method="post" asp-controller="Users" asp-action="Delete">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="Id" />
+                        </div>
+                        <input type="submit" value="Delete" class="btn btn-danger"/>
+                    </form>
+                
+            </div>
+        </div>
+    </div>
+
+</div>

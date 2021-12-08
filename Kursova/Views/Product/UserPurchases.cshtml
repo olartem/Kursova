@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Kursova.Models.Purchase>
+
+<div class="container">
+    <h2 class="mt-5">My Purchases</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var purchase in Model)
+        {
+            <tr>
+                <td>@purchase.Product.title</td>
+                <td>@purchase.Product.price</td>
+                <td>@purchase.CreatedAt.Date</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

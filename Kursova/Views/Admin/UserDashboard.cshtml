@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Kursova.Models.User>
+
+<a asp-controller="Users" asp-action="Create" class="btn btn-lg btn-dark mb-2 mt-5">Create New User</a>
+
+<div class="container">
+    <h2>My Purchases</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><a asp-action="UserDashboard" asp-route-sortOrder="@ViewBag.NameSort">User</a></th>
+            <th><a asp-action="UserDashboard" asp-route-sortOrder="@ViewBag.EmailSort">Email</a></th>
+            <th>Password Hash</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.PasswordHash</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,91 @@
+﻿@using System.Security.Claims
+@using Microsoft.VisualBasic
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Kursova</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    
+</head>
+<body>
+<header>
+<div class="bg-dark collapse" id="navbarHeader" style="">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <h4 class="text-white"> Logged in as @User.Identity.Name</h4>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <ul class="list-unstyled">
+                                <li><a asp-controller="Admin" asp-action="UserDashboard" class="text-white">User Dashboard</a></li>
+                                <li><a asp-controller="Admin" asp-action="PurchaseDashboard" class="text-white">Purchase Dashboard</a></li>
+                                <li><a asp-controller="Admin" asp-action="ProductDashboard" class="text-white">Product Dashboard</a></li>
+                            </ul>
+                        }
+                        <h4 class="text-white"> Account:</h4>
+                        @Html.ActionLink("My Purchases", "UserPurchases", "Product",
+                            new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, new { @class = "btn btn-outline-light mb-1 mr-1" })
+                        @Html.ActionLink("Edit", "Edit", "Users",
+                            new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, new { @class = "btn btn-outline-light mb-1" })
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" value="Logout" class="btn btn-outline-light" />
+                        </form>
+
+                    }
+                    else
+                    {
+                        <div class="d-grid gap-2">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light">Sign in</a>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light">Sign up</a>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand d-flex align-items-center">
+                <strong>Kursova</strong>
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2021 - Kursova - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", false)
+</body>
+</html>

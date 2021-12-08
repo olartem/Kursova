@@ -1,0 +1,50 @@
+﻿@model Kursova.ViewModels.RegisterViewModel
+
+    <div class="container-fluid vh-100" style="margin-top:300px">
+
+            <div class="rounded d-flex justify-content-center">
+                <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
+                    <div class="text-center">
+                        <h3 class="text-primary">Create Account</h3>
+                    </div>
+                    <div class="p-4">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <form method="post" asp-controller="Account" asp-action="Register">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary">
+                                    <i class="bi bi-person-plus-fill text-white"></i>
+                                </span>
+                                <input asp-for="UserName" placeholder="Full Name" class="form-control">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary">
+                                    <i class="bi bi-envelope text-white"></i>
+                                </span>
+                                <input asp-for="Email" placeholder="Email" class="form-control">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary">
+                                    <i class="bi bi-key-fill text-white"></i>
+                                </span>
+                                <input asp-for="Password" placeholder="Password" class="form-control">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary">
+                                    <i class="bi bi-key-fill text-white"></i>
+                                </span>
+                                <input asp-for="PasswordConfirm" placeholder="Confirm Password" class="form-control">
+                            </div>
+                            <div class="d-grid mx-auto">
+                                <input type="submit" class="btn btn-primary" value="Sign up">
+                            </div>
+                            <p class="text-center mt-3">
+                                Already have an account?
+                                <a class="text-primary" asp-controller="Account" asp-action="Login">Sign in</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
