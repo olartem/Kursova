@@ -13,7 +13,7 @@ namespace Kursova.ViewModels
         [Required]
         public string description { get; set; }
         [Required]
-        public int price { get; set; }
+        public string price { get; set; }
         public byte[] image { get; set; }
     }
 }

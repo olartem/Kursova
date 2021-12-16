@@ -35,6 +35,7 @@
                                 <div class="col-lg-6">
                                     <form id="payment-form" method="post" asp-controller="Product" asp-action="Buy">
                                         @Html.HiddenFor(n => n.Id)
+                                        @Html.HiddenFor(p => p.price)
                                         <section>
                                             <div class="bt-drop-in-wrapper">
                                                 <div id="bt-dropin"></div>

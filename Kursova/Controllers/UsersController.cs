@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Kursova.Models;
@@ -18,32 +17,6 @@ namespace Kursova.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "admin")]
-        public IActionResult Create() => View();
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = new User { Email = model.Email, UserName = model.UserName };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-            }
-            return View(model);
-        }
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -52,7 +25,9 @@ namespace Kursova.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName };
+
+            EditUserViewModel model = new EditUserViewModel
+            { Id = user.Id, Email = user.Email, UserName = user.UserName };
             return View(model);
         }
 
@@ -69,8 +44,9 @@ namespace Kursova.Controllers
                     {
                         model.NewPassword = model.OldPassword;
                     }
-                        
-                    IdentityResult password = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+                    IdentityResult password =
+                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (password.Succeeded)
                     {
                         user.Email = model.Email;
@@ -89,9 +65,10 @@ namespace Kursova.Controllers
                             }
                         }
                     }
-                        
+
                 }
             }
+
             return View(model);
         }
 
@@ -104,7 +81,8 @@ namespace Kursova.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
             }
-            return RedirectToAction("Index","Home");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

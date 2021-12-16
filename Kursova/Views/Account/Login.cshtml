@@ -25,8 +25,8 @@
                         <span asp-validation-for="Password"></span>
                     </div>
                     <div class="form-check mb-3">
-                            <input asp-for="RememberMe" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label asp-for="RememberMe" class="form-check-label" for="flexCheckDefault"></label>
+                            @Html.CheckBoxFor(u=>u.RememberMe)
+                            <label asp-for="RememberMe" class="form-check-label" for="RememberMe"></label>
                     </div>
                     <div class="d-grid mx-auto">
                         <input type="submit" class="btn btn-primary" value="Sign in">

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Kursova.Models
 {
@@ -12,7 +10,7 @@ namespace Kursova.Models
         public string Id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public int price { get; set; }
+        public string price { get; set; }
         public byte[] image { get; set; }
         public List<Purchase> purchases { get; set; } = new List<Purchase>();
 

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Kursova.Models.User>
 
-<a asp-controller="Users" asp-action="Create" class="btn btn-lg btn-dark mb-2 mt-5">Create New User</a>
+<a asp-controller="Admin" asp-action="CreateUser" class="btn btn-lg btn-dark mb-2 mt-5">Create New User</a>
 
 <div class="container">
-    <h2>My Purchases</h2>
+    <h2>User Dashboard</h2>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,6 +19,15 @@
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>@user.PasswordHash</td>
+                <td>
+
+                    <form method="post" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id">
+                        <button formaction="@Url.Action("EditUser", "Admin", new {id = user.Id})" formmethod="get">
+                            <i class="bi bi-pencil text-black"></i>
+                        </button>
+                        <button type="submit"><i class="bi bi-trash-fill text-black"></i></button>
+                    </form>
+                </td>
             </tr>
         }
         </tbody>

@@ -11,5 +11,6 @@ namespace Kursova.ViewModels
         public string Password { get; set; }
         [Required]
         public string UserName { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

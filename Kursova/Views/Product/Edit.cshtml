@@ -9,8 +9,9 @@
             </div>
             <div class="p-4">
                 <div asp-validation-summary="ModelOnly"></div>
-                <form method="post" asp-controller="Products" asp-action="Edit">
+                <form method="post" asp-controller="Product" asp-action="Edit">
                     <div asp-validation-summary="All" class="text-danger"></div>
+                    @Html.HiddenFor(i=>i.Id)
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-primary">
                             <i class="bi bi-bookmark-check text-white"></i>

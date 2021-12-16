@@ -3,7 +3,7 @@
 <a asp-controller="Product" asp-action="Create" class="btn btn-lg btn-dark mb-2 mt-5">Create New Product</a>
 
 <div class="container">
-    <h2>My Purchases</h2>
+    <h2>Product Dashboard</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -20,7 +20,16 @@
                 <td>@product.title</td>
                 <td>@product.price</td>
                 <td>@product.purchases.Count</td>
-                <td>@product.description</td>
+                <td>@product.description.Substring(0,100)...</td>
+                <td>
+                    
+                    <form method="post" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">
+                        <button formaction="@Url.Action("Edit", "Product", new {id = product.Id})" formmethod="get">
+                            <i class="bi bi-pencil text-black"></i>
+                        </button>
+                        <button type="submit"><i class="bi bi-trash-fill text-black"></i></button>
+                    </form>
+                </td>
             </tr>
             }
         </tbody>

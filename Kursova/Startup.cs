@@ -31,9 +31,6 @@ namespace Kursova
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(("DefaultConnection"))));
 
-            services.AddDbContext<ProductContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(("DefaultConnection"))));
-
             services.AddIdentity<User, IdentityRole>(options =>
                 {
                     options.Password = new PasswordOptions
