@@ -1,0 +1,41 @@
+﻿@model Kursova.ViewModels.ResultDashboardViewModel
+
+
+
+<div class="container">
+    <h2>Game Dashboard</h2>
+    <form method="get">
+        <div class="form-inline form-group">
+            <label class="control-label">User Name: </label>
+            <input name="name" class="form-control" />
+ 
+            <label class="control-label">Game: </label>
+            <select name="game" asp-items="Model.Games" class="form-control"></select>
+ 
+            <input type="submit" value="Filter" class="btn btn-outline-dark mt-2" />
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Number</th>
+            <th>User</th>
+            <th>End Time</th>
+            <th>Score<th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var result in Model.Results)
+        {
+            <tr>
+                <td>@result.Game.title</td>
+                <td>@result.Game.number</td>
+                <td>@result.User.UserName</td>
+                <td>@result.UserEndTime</td>
+                <td>@result.score</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

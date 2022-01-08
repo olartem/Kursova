@@ -7,8 +7,7 @@ using Kursova.Models;
 
 namespace Kursova.ViewModels
 {
-    public class DetailsProductViewModel : Product
+    public class DetailsGameViewModel : Game
     {
-        public string Nonce { get; set; }
     }
 }

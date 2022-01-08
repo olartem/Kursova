@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kursova.DAL;
@@ -7,6 +8,7 @@ using Kursova.Models;
 using Kursova.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kursova.Controllers
@@ -38,60 +40,46 @@ namespace Kursova.Controllers
             };
             return View(await users.ToListAsync());
         }
-        public async Task<IActionResult> ProductDashboard(SortState sortOrder = SortState.TitleDesc)
+        public async Task<IActionResult> GameDashboard(SortState sortOrder = SortState.TitleDesc)
         {
-            IQueryable<Product> products = _db.Products.Include(p=>p.purchases);
+            IQueryable<Game> games = _db.Games.Include(p=>p.Results);
             ViewData["TitleSort"] = sortOrder == SortState.TitleAsc ? SortState.TitleDesc : SortState.TitleAsc;
-            ViewData["PriceSort"] = sortOrder == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
-            ViewData["PurchaseCountSort"] = sortOrder == SortState.PurchaseCountAsc ? SortState.PurchaseCountDesc : SortState.PurchaseCountAsc;
+            ViewData["PriceSort"] = sortOrder == SortState.NumberAsc ? SortState.NumberDesc : SortState.NumberAsc;
+            ViewData["PlayCountSort"] = sortOrder == SortState.PlayCountAsc ? SortState.PlayCountDesc : SortState.PlayCountAsc;
 
-            products = sortOrder switch
+            games = sortOrder switch
             {
-                SortState.TitleAsc => products.OrderBy(s => s.title),
-                SortState.PriceAsc => products.OrderBy(s => s.price),
-                SortState.PriceDesc => products.OrderByDescending(s => s.price),
-                SortState.PurchaseCountAsc => products.OrderBy(s => s.purchases.Count),
-                SortState.PurchaseCountDesc => products.OrderByDescending(s => s.purchases.Count),
-                _ => products.OrderByDescending(s => s.title),
+                SortState.TitleAsc => games.OrderBy(s => s.title),
+                SortState.NumberAsc => games.OrderBy(s => s.number),
+                SortState.NumberDesc => games.OrderByDescending(s => s.number),
+                SortState.PlayCountAsc => games.OrderBy(s => s.Results.Count),
+                SortState.PlayCountDesc => games.OrderByDescending(s => s.Results.Count),
+                _ => games.OrderByDescending(s => s.title),
             };
-            return View(await products.ToListAsync());
+            return View(await games.ToListAsync());
         }
-        public async Task<IActionResult> PurchaseDashboard(DateTime? start, DateTime? end, SortState sortOrder = SortState.DateDesc)
+        public async Task<IActionResult> ResultDashboard(string? game, string name)
         {
-            IQueryable<Purchase> purchases = _db.Purchases.Include(p => p.Product).Include(u => u.User);
-            ViewData["TitleSort"] = sortOrder == SortState.TitleAsc ? SortState.TitleDesc : SortState.TitleAsc;
-            ViewData["PriceSort"] = sortOrder == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
-            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
-            ViewData["DateSort"] = sortOrder == SortState.DateAsc ? SortState.DateDesc : SortState.DateAsc;
-            if (start != null && end != null)
+            IQueryable<GameResult> results = _db.Results.Include(g => g.Game).Include(u=>u.User).OrderByDescending(s=>s.score);
+            if (game != null && game != "0")
             {
-                purchases = sortOrder switch
-                {
-                    SortState.DateAsc => purchases.Where(s=>s.CreatedAt<=end&&s.CreatedAt>=start).OrderBy(s => s.CreatedAt),
-                    SortState.NameAsc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderBy(s => s.User.UserName),
-                    SortState.NameDesc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderByDescending(s => s.User.UserName),
-                    SortState.TitleAsc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderBy(s => s.Product.title),
-                    SortState.TitleDesc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderByDescending(s => s.Product.title),
-                    SortState.PriceAsc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderBy(s => s.Product.price),
-                    SortState.PriceDesc => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderByDescending(s => s.Product.price),
-                    _ => purchases.Where(s => s.CreatedAt <= end && s.CreatedAt >= start).OrderByDescending(s => s.CreatedAt),
-                };
+                results = results.Where(p => p.Game.Id == game);
             }
-            else
+            if (!String.IsNullOrEmpty(name))
             {
-                purchases = sortOrder switch
-                {
-                    SortState.DateAsc => purchases.OrderBy(s => s.CreatedAt),
-                    SortState.NameAsc => purchases.OrderBy(s => s.User.UserName),
-                    SortState.NameDesc => purchases.OrderByDescending(s => s.User.UserName),
-                    SortState.TitleAsc => purchases.OrderBy(s => s.Product.title),
-                    SortState.TitleDesc => purchases.OrderByDescending(s => s.Product.title),
-                    SortState.PriceAsc => purchases.OrderBy(s => s.Product.price),
-                    SortState.PriceDesc => purchases.OrderByDescending(s => s.Product.price),
-                    _ => purchases.OrderByDescending(s => s.CreatedAt),
-                };
+                results = results.Where(p => p.User.UserName.Contains(name));
             }
-            return View(await purchases.ToListAsync());
+
+            List<Game> games = await _db.Games.ToListAsync();
+            games.Insert(0, new Game { title = "All", Id = "0" });
+
+            ResultDashboardViewModel viewModel = new ResultDashboardViewModel
+            {
+                Results = await results.ToListAsync(),
+                Games = new SelectList(games,"Id","title"),
+                Name = name
+            };
+            return View(viewModel);
         }
         public IActionResult CreateUser() => View();
 

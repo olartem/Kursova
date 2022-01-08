@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Kursova.Models.GameResult>
+
+<div class="container">
+    <h2 class="mt-5">My Purchases</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Game</th>
+            <th>Number</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var res in Model)
+        {
+            <tr>
+                <td>@res.Game.title</td>
+                <td>@res.Game.number</td>
+                <td>@res.score</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

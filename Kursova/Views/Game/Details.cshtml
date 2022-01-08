@@ -1,0 +1,41 @@
+﻿@model Kursova.ViewModels.DetailsGameViewModel
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/ProductDetails.css" />
+
+<div class="container">
+
+    <div class="col-lg-8 border p-3 main-section bg-white">
+        <div class="row m-0">
+            <div class="col-lg-4 left-side-product-box pb-3">
+                <img src="@ViewBag.ImageUrl" />
+            </div>
+            <div class="col-lg-8">
+                <div class="right-side-pro-detail border p-3 m-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="m-0 p-0 text-black">@Model.title</p>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class='row'>
+                                <div class='col'>
+                                    <p class="m-0 p-0 text-black">Tournament #@Model.number</p>
+                                    <p class="m-0 p-0 text-black">Start: @Model.StartTime</p>
+                                    <p class="m-0 p-0 text-black">End: @Model.EndTime</p>
+                                </div>
+
+                            </div>
+                            <hr class="p-0 m-0">
+                        </div>
+                        <div class="col-lg-12 pt-2">
+                            <h5>Product Detail</h5>
+                            <span>@Model.description</span>
+                            <hr class="m-0 pt-1 mt-2">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model IEnumerable<Kursova.Models.Product>
+@model IEnumerable<Kursova.Models.Game>
 
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Kursova Store</h1>
+            <h1 class="fw-light">Kursova Tournaments</h1>
             <p class="lead text-muted">Description</p>
         </div>
     </div>
@@ -15,19 +15,19 @@
     <div class="container mb-1">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach (var product in Model)
+            @foreach (var game in Model)
             {
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class="card-img-top" runat="server" src="@product.imageUrl()" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" data-holder-rendered="true">
+                        <img class="card-img-top" runat="server" src="@game.imageUrl()" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" data-holder-rendered="true">
 
                         <div class="card-body">
-                            <h5 class="card-title">@product.title</h5>
-                            <p class="card-text">@product.description.Substring(0,100)...</p>
+                            <h5 class="card-title">@game.title</h5>
+                            <p class="card-text">@game.description.Substring(0, @game.description.Length)...</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    @Html.ActionLink("View", "Details", "Product",
-                                        new { id = product.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
+                                    @Html.ActionLink("View", "Details", "Game",
+                                        new { id = game.Id }, new { @class = "btn btn-sm btn-outline-secondary" })
                                 </div>
                             </div>
                         </div>

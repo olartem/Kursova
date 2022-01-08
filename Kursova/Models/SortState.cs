@@ -13,11 +13,11 @@ namespace Kursova.Models
         EmailDesc,
         TitleAsc,
         TitleDesc,
-        PriceAsc,
-        PriceDesc,
+        NumberAsc,
+        NumberDesc,
         DateAsc,
         DateDesc,
-        PurchaseCountAsc,
-        PurchaseCountDesc
+        PlayCountAsc,
+        PlayCountDesc
     }
 }

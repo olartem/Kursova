@@ -30,12 +30,12 @@
                         {
                             <ul class="list-unstyled">
                                 <li><a asp-controller="Admin" asp-action="UserDashboard" class="text-white">User Dashboard</a></li>
-                                <li><a asp-controller="Admin" asp-action="PurchaseDashboard" class="text-white">Purchase Dashboard</a></li>
-                                <li><a asp-controller="Admin" asp-action="ProductDashboard" class="text-white">Product Dashboard</a></li>
+                                <li><a asp-controller="Admin" asp-action="GameDashboard" class="text-white">Game Dashboard</a></li>
+                                <li><a asp-controller="Admin" asp-action="ResultDashboard" class="text-white">Result Dashboard</a></li>
                             </ul>
                         }
                         <h4 class="text-white"> Account:</h4>
-                        @Html.ActionLink("My Purchases", "UserPurchases", "Product",
+                        @Html.ActionLink("My Games", "UserGames", "Game",
                             new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, new { @class = "btn btn-outline-light mb-1 mr-1" })
                         @Html.ActionLink("Edit", "Edit", "Users",
                             new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, new { @class = "btn btn-outline-light mb-1" })

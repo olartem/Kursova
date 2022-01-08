@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kursova.Models
 {
-    public class Product
+    public class Game
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string title { get; set; }
+        public uint number { get; set; }
         public string description { get; set; }
-        public string price { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime StartTime { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime EndTime { get; set; }
         public byte[] image { get; set; }
-        public List<Purchase> purchases { get; set; } = new List<Purchase>();
+        public List<GameResult> Results { get; set; } = new List<GameResult>();
 
         public string imageUrl()
         {

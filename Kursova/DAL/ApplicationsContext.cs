@@ -11,18 +11,18 @@ namespace Kursova.DAL
         {
             Database.EnsureCreated();
         }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<GameResult> Results { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Purchase>()
+            modelBuilder.Entity<GameResult>()
                 .HasOne(p => p.User)
-                .WithMany(p => p.purchases)
+                .WithMany(p => p.Results)
                 .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Purchase>()
-                .HasOne(p => p.Product)
-                .WithMany(p => p.purchases)
+            modelBuilder.Entity<GameResult>()
+                .HasOne(p => p.Game)
+                .WithMany(p => p.Results)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

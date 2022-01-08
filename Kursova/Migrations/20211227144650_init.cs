@@ -47,18 +47,20 @@ namespace Kursova.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Games",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    number = table.Column<long>(type: "bigint", nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    price = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Games", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,27 +170,28 @@ namespace Kursova.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Purchases",
+                name: "Results",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProductId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    GameId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    score = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Purchases", x => x.Id);
+                    table.PrimaryKey("PK_Results", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Purchases_AspNetUsers_UserId",
+                        name: "FK_Results_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Purchases_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
+                        name: "FK_Results_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -233,13 +236,13 @@ namespace Kursova.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchases_ProductId",
-                table: "Purchases",
-                column: "ProductId");
+                name: "IX_Results_GameId",
+                table: "Results",
+                column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchases_UserId",
-                table: "Purchases",
+                name: "IX_Results_UserId",
+                table: "Results",
                 column: "UserId");
         }
 
@@ -261,7 +264,7 @@ namespace Kursova.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Purchases");
+                name: "Results");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -270,7 +273,7 @@ namespace Kursova.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Games");
         }
     }
 }

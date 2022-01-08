@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Kursova.DAL;
+using System.Linq;
+using System;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Kursova.Controllers
 {
@@ -19,7 +22,8 @@ namespace Kursova.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.Products.ToListAsync());
+            var games = await db.Games.Where(t => t.StartTime <= DateTime.Now).Where(t=>t.EndTime>=DateTime.Now).ToListAsync();
+            return View(games);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

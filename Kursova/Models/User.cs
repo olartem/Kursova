@@ -5,6 +5,6 @@ namespace Kursova.Models
 {
     public class User : IdentityUser
     {
-        public List<Purchase> purchases { get; set; } = new List<Purchase>();
+        public List<GameResult> Results { get; set; } = new List<GameResult>();
     }
 }

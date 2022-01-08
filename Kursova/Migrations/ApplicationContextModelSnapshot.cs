@@ -19,11 +19,17 @@ namespace Kursova.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("Kursova.Models.Product", b =>
+            modelBuilder.Entity("Kursova.Models.Game", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
@@ -31,39 +37,42 @@ namespace Kursova.Migrations
                     b.Property<byte[]>("image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("price")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("number")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("Kursova.Models.Purchase", b =>
+            modelBuilder.Entity("Kursova.Models.GameResult", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProductId")
+                    b.Property<string>("GameId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UserEndTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<long>("score")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("GameId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchases");
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("Kursova.Models.User", b =>
@@ -262,19 +271,19 @@ namespace Kursova.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Kursova.Models.Purchase", b =>
+            modelBuilder.Entity("Kursova.Models.GameResult", b =>
                 {
-                    b.HasOne("Kursova.Models.Product", "Product")
-                        .WithMany("purchases")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("Kursova.Models.Game", "Game")
+                        .WithMany("Results")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Kursova.Models.User", "User")
-                        .WithMany("purchases")
+                        .WithMany("Results")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Product");
+                    b.Navigation("Game");
 
                     b.Navigation("User");
                 });
@@ -330,14 +339,14 @@ namespace Kursova.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Kursova.Models.Product", b =>
+            modelBuilder.Entity("Kursova.Models.Game", b =>
                 {
-                    b.Navigation("purchases");
+                    b.Navigation("Results");
                 });
 
             modelBuilder.Entity("Kursova.Models.User", b =>
                 {
-                    b.Navigation("purchases");
+                    b.Navigation("Results");
                 });
 #pragma warning restore 612, 618
         }

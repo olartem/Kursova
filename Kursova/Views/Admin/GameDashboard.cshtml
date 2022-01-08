@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Kursova.Models.Game>
+
+<a asp-controller="Game" asp-action="Create" class="btn btn-lg btn-dark mb-2 mt-5">Create New Game</a>
+
+<div class="container">
+    <h2>Game Dashboard</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a asp-action="GameDashboard" asp-route-sortOrder="@ViewBag.TitleSort">Title</a></th>
+                <th><a asp-action="GameDashboard" asp-route-sortOrder="@ViewBag.NumberSort">Number</a></th>
+                <th><a asp-action="GameDashboard" asp-route-sortOrder="@ViewBag.PlayCountSort">Games Played</a></th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description<th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+            <tr>
+                <td>@game.title</td>
+                <td>@game.number</td>
+                <td>@game.Results.Count</td>
+                <td>@game.StartTime</td>
+                <td>@game.EndTime</td>
+                <td>@game.description.Substring(0, @game.description.Length)...</td>
+                <td>
+                    
+                    <form method="post" asp-controller="Game" asp-action="Delete" asp-route-id="@game.Id">
+                        <button formaction="@Url.Action("Edit", "Game", new {id = game.Id})" formmethod="get">
+                            <i class="bi bi-pencil text-black"></i>
+                        </button>
+                        <button type="submit"><i class="bi bi-trash-fill text-black"></i></button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
