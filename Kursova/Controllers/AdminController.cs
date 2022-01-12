@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kursova.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class AdminController : Controller
     {
         private readonly ApplicationContext _db;
@@ -25,6 +25,7 @@ namespace Kursova.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UserDashboard(SortState sortOrder = SortState.NameDesc)
         {
             var users = _userManager.Users;
@@ -40,6 +41,7 @@ namespace Kursova.Controllers
             };
             return View(await users.ToListAsync());
         }
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GameDashboard(SortState sortOrder = SortState.TitleDesc)
         {
             IQueryable<Game> games = _db.Games.Include(p=>p.Results);
@@ -58,6 +60,7 @@ namespace Kursova.Controllers
             };
             return View(await games.ToListAsync());
         }
+        [AllowAnonymous]
         public async Task<IActionResult> ResultDashboard(string? game, string name)
         {
             IQueryable<GameResult> results = _db.Results.Include(g => g.Game).Include(u=>u.User).OrderByDescending(s=>s.score);
@@ -85,6 +88,7 @@ namespace Kursova.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateUser(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -110,6 +114,7 @@ namespace Kursova.Controllers
 
             return View(model);
         }
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -125,6 +130,7 @@ namespace Kursova.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditUser(AdminEditUserViewModel model)
         {
             if (ModelState.IsValid)
